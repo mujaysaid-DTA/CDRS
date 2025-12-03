@@ -7,7 +7,7 @@ import ReportIncident from './pages/ReportIncident';
 import AdminPanel from './pages/AdminPanel';
 import IncidentMap from './pages/IncidentMap';
 import Resources from './pages/Resources';
-import Chat from './pages/Chat'; // The new Chat import
+// import Chat from './pages/Chat';  <-- COMMENTED OUT
 import './App.css';
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
           <Link to="/report">Report</Link>
           <Link to="/map">Map</Link>
           <Link to="/resources">Resources</Link>
-          <Link to="/chat">Chat</Link> {/* Added Chat Link */}
+          {/* <Link to="/chat">Chat</Link> */}
         </div>
       </nav>
 
@@ -33,7 +33,7 @@ function App() {
               <p>Real-time reporting and resource management.</p>
               <div className="cta-group">
                 <Link to="/login" className="cta-button secondary">Login</Link>
-                <Link to="/chat" className="cta-button primary">🔴 Live Chat</Link>
+                {/* <Link to="/chat" className="cta-button primary">🔴 Live Chat</Link> */}
               </div>
             </header>
           } />
@@ -44,7 +44,7 @@ function App() {
           <Route path="/admin" element={<AdminPanel />} />
           <Route path="/map" element={<IncidentMap />} />
           <Route path="/resources" element={<Resources />} />
-          <Route path="/chat" element={<Chat />} /> {/* The new Route */}
+          {/* <Route path="/chat" element={<Chat />} /> */}
         </Routes>
       </div>
     </div>
