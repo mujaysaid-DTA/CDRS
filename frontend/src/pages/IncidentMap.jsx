@@ -9,7 +9,7 @@ function IncidentMap() {
 
   useEffect(() => {
     // Fetch real data from backend
-    fetch(`${API_BASE_URL}/incidents')
+    fetch(`${API_BASE_URL}/incidents`)
       .then(res => res.json())
       .then(data => {
         setIncidents(data);

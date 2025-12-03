@@ -11,7 +11,7 @@ function Resources() {
 
   // Fetch Data
   const fetchResources = () => {
-    fetch(`${API_BASE_URL}/resources')
+    fetch(`${API_BASE_URL}/resources`)
       .then(res => res.json())
       .then(data => setResources(data))
       .catch(err => console.error(err));
@@ -23,7 +23,7 @@ function Resources() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await fetch(`${API_BASE_URL}/resources', {
+    await fetch(`${API_BASE_URL}/resources`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData)

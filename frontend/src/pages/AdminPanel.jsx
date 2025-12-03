@@ -21,7 +21,7 @@ function AdminPanel() {
   // Fetch Data
   useEffect(() => {
     if (isAuthenticated) {
-      fetch(`${API_BASE_URL}/incidents')
+      fetch(`${API_BASE_URL}/incidents`)
         .then(res => res.json())
         .then(data => setIncidents(data))
         .catch(err => console.error(err));

@@ -108,7 +108,7 @@ function IncidentList() {
       try {
         setLoading(true);
         // FETCHING FROM YOUR NEW BACKEND
-        const response = await fetch(`${API_BASE_URL}/incidents');
+        const response = await fetch(`${API_BASE_URL}/incidents`);
         const data = await response.json();
 
         setIncidents(data);
