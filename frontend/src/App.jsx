@@ -1,77 +1,53 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import './App.css';
-
-// Pages
-import ReportIncident from './pages/ReportIncident';
-import IncidentList from './pages/IncidentList';
-import IncidentMap from './pages/IncidentMap';
-import Resources from './pages/Resources';
-import AdminPanel from './pages/AdminPanel';
+import { Routes, Route, Link } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import Chat from './pages/Chat';
-
-function Home() {
-  return (
-    <div className="App">
-      {/* Background Animated Orbs */}
-      <div className="bg-orb orb-1"></div>
-      <div className="bg-orb orb-2"></div>
-      <div className="bg-orb orb-3"></div>
-
-      <header className="App-header">
-        <div className="hero-content">
-          <h1>Disaster Response<br />System</h1>
-          <p className="subtitle">Real-time crowdsourcing for emergency coordination.</p>
-
-          <div className="features-grid">
-            <div className="feature-card">
-              <span className="icon">📍</span>
-              <h3>Report</h3>
-              <p>Geolocation-based incident reporting for rapid response.</p>
-            </div>
-
-            <div className="feature-card">
-              <span className="icon">🗺️</span>
-              <h3>Live Map</h3>
-              <p>Interactive visualization of active threats in your area.</p>
-            </div>
-
-            <div className="feature-card">
-              <span className="icon">🤝</span>
-              <h3>Volunteer</h3>
-              <p>Connect supplies and aid directly to those in need.</p>
-            </div>
-          </div>
-
-          <div className="cta-buttons">
-            <Link to="/report" className="cta-button primary">Report Incident</Link>
-            <Link to="/map" className="cta-button secondary">View Map</Link>
-            <Link to="/resources" className="cta-button secondary">Volunteer</Link>
-            <Link to="/login" className="cta-button secondary">Login</Link>
-          </div>
-        </div>
-      </header>
-    </div>
-  );
-}
+import IncidentList from './pages/IncidentList';
+import ReportIncident from './pages/ReportIncident';
+import AdminPanel from './pages/AdminPanel';
+import IncidentMap from './pages/IncidentMap';
+import Resources from './pages/Resources';
+import Chat from './pages/Chat'; // The new Chat import
+import './App.css';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/report" element={<ReportIncident />} />
-        <Route path="/incidents" element={<IncidentList />} />
-        <Route path="/map" element={<IncidentMap />} />
-        <Route path="/resources" element={<Resources />} />
-        <Route path="/admin" element={<AdminPanel />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/chat" element={<chat />} />
-      </Routes>
-    </Router>
+    <div className="App">
+      <nav className="navbar">
+        <div className="logo">ResQ</div>
+        <div className="nav-links">
+          <Link to="/">Home</Link>
+          <Link to="/incidents">Incidents</Link>
+          <Link to="/report">Report</Link>
+          <Link to="/map">Map</Link>
+          <Link to="/resources">Resources</Link>
+          <Link to="/chat">Chat</Link> {/* Added Chat Link */}
+        </div>
+      </nav>
+
+      <div className="content">
+        <Routes>
+          <Route path="/" element={
+            <header className="hero">
+              <h1>Disaster Response Coordination</h1>
+              <p>Real-time reporting and resource management.</p>
+              <div className="cta-group">
+                <Link to="/login" className="cta-button secondary">Login</Link>
+                <Link to="/chat" className="cta-button primary">🔴 Live Chat</Link>
+              </div>
+            </header>
+          } />
+          <Route path="/incidents" element={<IncidentList />} />
+          <Route path="/report" element={<ReportIncident />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/map" element={<IncidentMap />} />
+          <Route path="/resources" element={<Resources />} />
+          <Route path="/chat" element={<Chat />} /> {/* The new Route */}
+        </Routes>
+      </div>
+    </div>
   );
 }
 
