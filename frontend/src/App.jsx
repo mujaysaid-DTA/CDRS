@@ -10,6 +10,7 @@ import Resources from './pages/Resources';
 import AdminPanel from './pages/AdminPanel';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Chat from './pages/Chat';
 
 function Home() {
   return (
