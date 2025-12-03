@@ -1,0 +1,64 @@
+.resources-page {
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  color: white;
+}
+
+.res-header { text-align: center; margin-bottom: 2rem; }
+.res-header h1 { color: white; }
+
+.tab {
+  background: rgba(255,255,255,0.1);
+  color: #cbd5e1;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.tab:hover { background: rgba(255,255,255,0.2); }
+
+/* Active Tabs */
+.tab.active.req { background: #ef4444; color: white; border-color: #ef4444; }
+.tab.active.vol { background: #6366f1; color: white; border-color: #6366f1; }
+
+/* Form */
+.res-form {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  border-radius: 16px;
+  color: white;
+}
+
+.res-form input, .res-form select {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+/* Cards */
+.res-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: transform 0.2s;
+}
+
+.res-card:hover { 
+  transform: translateY(-5px); 
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.res-card.fulfilled { opacity: 0.6; }
+
+.card-details {
+  background: rgba(0, 0, 0, 0.3);
+  color: #cbd5e1;
+  padding: 0.8rem;
+  border-radius: 8px;
+}
+
+.card-top .time { color: #94a3b8; }
+.empty { text-align: center; color: #64748b; font-size: 1.2rem; }

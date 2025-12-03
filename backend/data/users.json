@@ -1,0 +1,18 @@
+[
+  {
+    "id": "admin-001",
+    "name": "System Administrator",
+    "email": "admin@drs.com",
+    "password": "admin",
+    "role": "admin",
+    "createdAt": "2023-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "90c45894-4684-44dd-9041-4abee591e294",
+    "name": "Abdullahi",
+    "email": "mj@gmail.com",
+    "password": "12345",
+    "role": "volunteer",
+    "createdAt": "2025-12-03T13:16:40.331Z"
+  }
+]

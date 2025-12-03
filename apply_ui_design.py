@@ -1,0 +1,309 @@
+import os
+
+
+def apply_ui_design():
+    base_path = os.getcwd()
+    frontend_src = os.path.join(base_path, 'frontend', 'src')
+
+    print("🎨 Applying Modern UI Design (Glassmorphism)...\n")
+
+    # 1. THE STYLING (App.css)
+    # This defines the dark theme, the animations, and the glass effect.
+    css_content = """@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+:root {
+  --primary: #6366f1;   /* Indigo */
+  --secondary: #a855f7; /* Purple */
+  --accent: #ec4899;    /* Pink */
+  --bg-dark: #0f172a;   /* Deep Slate */
+  --glass: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-dark);
+  color: white;
+  overflow-x: hidden;
+}
+
+/* --- 1. ANIMATED BACKGROUND --- */
+.App {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden; /* Hides the orbs if they float off screen */
+}
+
+/* The Glowing Orbs */
+.bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px); /* This makes it look like a glow */
+  opacity: 0.5;
+  z-index: -1;
+  animation: float 10s infinite ease-in-out;
+}
+
+.orb-1 {
+  width: 400px;
+  height: 400px;
+  background: var(--primary);
+  top: -50px;
+  left: -50px;
+}
+
+.orb-2 {
+  width: 500px;
+  height: 500px;
+  background: var(--secondary);
+  bottom: -100px;
+  right: -100px;
+  animation-delay: -5s; /* Start halfway through animation */
+}
+
+.orb-3 {
+  width: 300px;
+  height: 300px;
+  background: var(--accent);
+  top: 40%;
+  left: 30%;
+  opacity: 0.3;
+  animation-duration: 15s;
+}
+
+@keyframes float {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(30px, 50px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* --- 2. HERO SECTION --- */
+.App-header {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  z-index: 10;
+}
+
+.hero-content {
+  text-align: center;
+  max-width: 1000px;
+  animation: fadeUp 1s ease-out;
+}
+
+h1 {
+  font-size: 5rem;
+  margin: 0;
+  background: linear-gradient(to right, #fff, #c7d2fe);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -2px;
+  font-weight: 800;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  color: #cbd5e1;
+  margin-bottom: 4rem;
+  font-weight: 400;
+}
+
+/* --- 3. GLASS CARDS --- */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.feature-card {
+  /* The Glass Effect */
+  background: var(--glass);
+  backdrop-filter: blur(12px); /* This blurs what's behind the card */
+  border: 1px solid var(--glass-border);
+
+  padding: 2.5rem;
+  border-radius: 24px;
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.feature-card .icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.feature-card h3 {
+  font-size: 1.5rem;
+  margin: 0 0 0.5rem 0;
+  color: white;
+}
+
+.feature-card p {
+  color: #94a3b8;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* --- 4. BUTTONS --- */
+.cta-buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cta-button {
+  text-decoration: none;
+  padding: 1rem 3rem;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  transition: transform 0.2s ease;
+}
+
+.cta-button.primary {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+}
+
+.cta-button.primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 30px rgba(99, 102, 241, 0.5);
+}
+
+.cta-button.secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.cta-button.secondary:hover {
+  background: white;
+  color: var(--bg-dark);
+  transform: scale(1.05);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  h1 { font-size: 3rem; }
+  .features-grid { grid-template-columns: 1fr; }
+  .cta-buttons { flex-direction: column; }
+  .cta-button { text-align: center; }
+}
+"""
+
+    # 2. THE STRUCTURE (App.jsx)
+    # We need to add the "bg-orb" divs here so the CSS has something to animate.
+    jsx_content = """import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import './App.css';
+
+// Pages
+import ReportIncident from './pages/ReportIncident';
+import IncidentList from './pages/IncidentList';
+import IncidentMap from './pages/IncidentMap';
+import Resources from './pages/Resources';
+import AdminPanel from './pages/AdminPanel';
+import Login from './pages/Login';
+import Register from './pages/Register';
+
+function Home() {
+  return (
+    <div className="App">
+      {/* Background Animated Orbs */}
+      <div className="bg-orb orb-1"></div>
+      <div className="bg-orb orb-2"></div>
+      <div className="bg-orb orb-3"></div>
+
+      <header className="App-header">
+        <div className="hero-content">
+          <h1>Disaster Response<br />System</h1>
+          <p className="subtitle">Real-time crowdsourcing for emergency coordination.</p>
+
+          <div className="features-grid">
+            <div className="feature-card">
+              <span className="icon">📍</span>
+              <h3>Report</h3>
+              <p>Geolocation-based incident reporting for rapid response.</p>
+            </div>
+
+            <div className="feature-card">
+              <span className="icon">🗺️</span>
+              <h3>Live Map</h3>
+              <p>Interactive visualization of active threats in your area.</p>
+            </div>
+
+            <div className="feature-card">
+              <span className="icon">🤝</span>
+              <h3>Volunteer</h3>
+              <p>Connect supplies and aid directly to those in need.</p>
+            </div>
+          </div>
+
+          <div className="cta-buttons">
+            <Link to="/report" className="cta-button primary">Report Incident</Link>
+            <Link to="/map" className="cta-button secondary">View Map</Link>
+            <Link to="/resources" className="cta-button secondary">Volunteer</Link>
+            <Link to="/login" className="cta-button secondary">Login</Link>
+          </div>
+        </div>
+      </header>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/report" element={<ReportIncident />} />
+        <Route path="/incidents" element={<IncidentList />} />
+        <Route path="/map" element={<IncidentMap />} />
+        <Route path="/resources" element={<Resources />} />
+        <Route path="/admin" element={<AdminPanel />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
+"""
+
+    # Write files
+    with open(os.path.join(frontend_src, 'App.css'), 'w', encoding='utf-8') as f:
+        f.write(css_content)
+
+    with open(os.path.join(frontend_src, 'App.jsx'), 'w', encoding='utf-8') as f:
+        f.write(jsx_content)
+
+    print("✅ App.css updated (Dark Mode + Glass Effects)")
+    print("✅ App.jsx updated (Added Background Orbs)")
+    print("👉 Check http://localhost:3000 now!")
+
+
+if __name__ == "__main__":
+    apply_ui_design()

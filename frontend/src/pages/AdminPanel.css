@@ -1,0 +1,35 @@
+.admin-login {
+  background: transparent; /* Use global dark bg */
+}
+
+.admin-panel {
+  min-height: 100vh;
+  background: transparent;
+  color: white;
+}
+
+.admin-header {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.table-container {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+table { color: white; }
+
+th { 
+  background: rgba(0, 0, 0, 0.3); 
+  color: #cbd5e1; 
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+td { border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+.verified-row { background: rgba(16, 185, 129, 0.1); }
