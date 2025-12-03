@@ -68,6 +68,7 @@ function App() {
         <Route path="/admin" element={<AdminPanel />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/chat" element={<chat />} />
       </Routes>
     </Router>
   );

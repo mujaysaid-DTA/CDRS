@@ -1,4 +1,15 @@
-const express = require('express');
+import os
+
+
+def setup_chat_backend():
+    base_path = os.getcwd()
+    backend_path = os.path.join(base_path, 'backend')
+    server_path = os.path.join(backend_path, 'src', 'server.js')
+
+    print("🔌 Upgrading Backend for Real-Time Chat...")
+
+    # 1. Update server.js to include Socket.io and JSON storage
+    server_code = """const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
@@ -97,3 +108,14 @@ server.listen(PORT, () => {
   console.log(`✅ Server is running on port ${PORT}`);
   console.log(`💬 Real-time Chat System Active`);
 });
+"""
+
+    with open(server_path, 'w', encoding='utf-8') as f:
+        f.write(server_code)
+
+    print("✅ server.js updated (Socket.io added).")
+    print("👉 NEXT: Run 'npm install socket.io' inside your backend folder.")
+
+
+if __name__ == "__main__":
+    setup_chat_backend()
