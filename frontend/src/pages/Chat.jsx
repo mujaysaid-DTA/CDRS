@@ -1,115 +1,110 @@
 import React, { useState, useEffect, useRef } from 'react';
-import io from 'socket.io-client';
-import API_BASE_URL from '../config';
 import './Chat.css';
 
-// Extract the domain only for socket connection (remove /api/v1)
-const SOCKET_URL = API_BASE_URL.replace('/api/v1', '');
-const socket = io(SOCKET_URL);
-
-function Chat() {
-  const [messages, setMessages] = useState([]);
-  const [currentMessage, setCurrentMessage] = useState("");
-  const [username, setUsername] = useState("");
-  const [isJoined, setIsJoined] = useState(false);
+const Chat = ({ incidentId }) => {
+  const [message, setMessage] = useState('');
+  const [isTyping, setIsTyping] = useState(false); // Controls the "..." animation
   const messagesEndRef = useRef(null);
 
+  const [history, setHistory] = useState([
+    { sender: 'System', text: `Connected to secure channel #${incidentId}` },
+    { sender: 'Support', text: 'HQ here. What is the current status?' }
+  ]);
+
+  // Reset when switching incidents
   useEffect(() => {
-    // Listen for incoming messages
-    socket.on('receive_message', (data) => {
-      setMessages((prev) => [...prev, data]);
-    });
+    setHistory([
+      { sender: 'System', text: `Connected to secure channel #${incidentId}` },
+      { sender: 'Support', text: 'HQ here. What is the current status?' }
+    ]);
+    setIsTyping(false);
+  }, [incidentId]);
 
-    // Load history when joining
-    socket.on('load_history', (history) => {
-      setMessages(history);
-    });
-
-    // Cleanup listener on unmount
-    return () => {
-      socket.off('receive_message');
-      socket.off('load_history');
-    };
-  }, []);
-
-  // Auto-scroll to bottom
+  // Auto-scroll
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  }, [history, isTyping]);
 
-  const joinChat = () => {
-    if (username !== "") {
-      setIsJoined(true);
-    }
-  };
+  const handleSend = () => {
+    if (!message.trim()) return;
 
-  const sendMessage = async () => {
-    if (currentMessage !== "") {
-      const messageData = {
-        user: username,
-        text: currentMessage,
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      };
+    // 1. Add User Message immediately
+    const newMessage = { sender: 'You', text: message };
+    setHistory((prev) => [...prev, newMessage]);
+    setMessage('');
 
-      await socket.emit('send_message', messageData);
-      setCurrentMessage("");
-    }
+    // 2. Start "Typing" animation
+    setIsTyping(true);
+
+    // 3. Simulate delay then reply
+    setTimeout(() => {
+      setIsTyping(false); // Stop typing animation
+      setHistory((prev) => [
+        ...prev,
+        { sender: 'Support', text: 'Copy that. Deploying resources to your location.' }
+      ]);
+    }, 2000); // 2 second delay so you can see the animation
   };
 
   return (
-    <div className="chat-page">
-      <div className="chat-container">
-        {!isJoined ? (
-          <div className="join-screen">
-            <h2>⛑️ Volunteer Chat</h2>
-            <p>Enter your name to join the coordination channel.</p>
-            <input 
-              type="text" 
-              placeholder="Your Name..." 
-              onChange={(event) => setUsername(event.target.value)} 
-            />
-            <button onClick={joinChat}>Join Room</button>
+    <div className="chat-window">
+
+      {/* Animated Header */}
+      <div className="chat-header">
+        <div style={{display:'flex', flexDirection:'column'}}>
+          <span style={{fontSize:'1.1em'}}>Incident #{incidentId}</span>
+          <span style={{fontSize:'0.8em', opacity: 0.8}}>Command Center</span>
+        </div>
+        <div className="status-badge">
+          <div className="pulse-dot"></div>
+          <span>LIVE</span>
+        </div>
+      </div>
+
+      {/* Messages Area */}
+      <div className="messages-list">
+        {history.map((msg, index) => (
+          <div
+            key={index}
+            className={`message-bubble ${msg.sender === 'You' ? 'sent' : 'received'}`}
+          >
+            {msg.sender !== 'You' && <span className="sender-label">{msg.sender}</span>}
+            {msg.text}
           </div>
-        ) : (
-          <div className="chat-screen">
-            <div className="chat-header">
-              <h3>📡 Live Coordination</h3>
-              <span className="live-indicator">● Live</span>
-            </div>
+        ))}
 
-            <div className="chat-body">
-              {messages.map((msg, index) => (
-                <div 
-                  className={`message-bubble ${msg.user === username ? "me" : "other"}`} 
-                  key={index}
-                >
-                  <div className="msg-content">
-                    <p>{msg.text}</p>
-                  </div>
-                  <div className="msg-meta">
-                    <span id="author">{msg.user}</span>
-                    <span id="time">{msg.time}</span>
-                  </div>
-                </div>
-              ))}
-              <div ref={messagesEndRef} />
-            </div>
-
-            <div className="chat-footer">
-              <input 
-                type="text" 
-                value={currentMessage}
-                placeholder="Type a message..." 
-                onChange={(event) => setCurrentMessage(event.target.value)}
-                onKeyPress={(event) => event.key === 'Enter' && sendMessage()}
-              />
-              <button onClick={sendMessage}>➤</button>
-            </div>
+        {/* Typing Indicator Animation */}
+        {isTyping && (
+          <div className="typing-indicator">
+            <div className="dot"></div>
+            <div className="dot"></div>
+            <div className="dot"></div>
           </div>
         )}
+
+        <div ref={messagesEndRef} />
+      </div>
+
+      {/* Input Area */}
+      <div className="chat-input-area">
+        <input
+          type="text"
+          className="chat-input"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          placeholder="Type emergency update..."
+          onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+        />
+        <button className="send-button" onClick={handleSend}>
+          {/* Send Icon SVG */}
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22 2L11 13" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
       </div>
     </div>
   );
-}
+};
 
 export default Chat;
